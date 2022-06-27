@@ -9,8 +9,12 @@
 #import "Parse/Parse.h"
 #import "AppDelegate.h" // Needed for didTagLogOut
 #import "LoginViewController.h" // Needed for didTagLogOut
+#import "PostCell.h" // Needed for TableView
+#import "InsPost.h" // Needed for TableView
 
-@interface HomeFeedViewController ()
+@interface HomeFeedViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSArray *arrayOfPosts;
 
 @end
 
@@ -18,7 +22,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // Set up TableView
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    [self fetchPosts];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PostCell *cell =[tableView dequeueReusableCellWithIdentifier: @"PostCell"];
+    InsPost *post = self.arrayOfPosts[indexPath.row];
+    
+    // Set the cell's caption
+    cell.captionLabel.text = post[@"caption"];
+    
+    // TODO: Set the cell's image
+    
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.arrayOfPosts.count;
+}
+
+- (void) fetchPosts {
+    PFQuery *query = [PFQuery queryWithClassName:@"InsPost"];
+    [query orderByDescending:@"createdAt"];
+    query.limit = 20;
+    
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+        if (posts != nil) {
+            self.arrayOfPosts = posts;
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
 }
 
 - (IBAction)didTapLogOut:(id)sender {

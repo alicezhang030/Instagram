@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		326419FFCE790579591F4082 /* Pods_InstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E947E87A67ADB906404117 /* Pods_InstagramTests.framework */; };
+		5339CB08286A5CF500A9A82B /* PhotoMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5339CB07286A5CF500A9A82B /* PhotoMapViewController.m */; };
+		5339CB0F286A5E5100A9A82B /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5339CB0E286A5E5100A9A82B /* ComposeViewController.m */; };
+		5339CB12286A66EB00A9A82B /* InsPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 5339CB11286A66EB00A9A82B /* InsPost.m */; };
+		5339CB1C286A6AAF00A9A82B /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5339CB1B286A6AAF00A9A82B /* PostCell.m */; };
 		5375690F286A42D300F0FCB0 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5375690E286A42D300F0FCB0 /* LoginViewController.m */; };
 		53756912286A487D00F0FCB0 /* HomeFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53756911286A487D00F0FCB0 /* HomeFeedViewController.m */; };
 		53A7EF24286A2A6A008F4444 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A7EF23286A2A6A008F4444 /* AppDelegate.m */; };
@@ -42,6 +46,14 @@
 
 /* Begin PBXFileReference section */
 		48E947E87A67ADB906404117 /* Pods_InstagramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5339CB06286A5CF500A9A82B /* PhotoMapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoMapViewController.h; sourceTree = "<group>"; };
+		5339CB07286A5CF500A9A82B /* PhotoMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoMapViewController.m; sourceTree = "<group>"; };
+		5339CB0D286A5E5100A9A82B /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
+		5339CB0E286A5E5100A9A82B /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
+		5339CB10286A66EB00A9A82B /* InsPost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InsPost.h; sourceTree = "<group>"; };
+		5339CB11286A66EB00A9A82B /* InsPost.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InsPost.m; sourceTree = "<group>"; };
+		5339CB1A286A6AAF00A9A82B /* PostCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
+		5339CB1B286A6AAF00A9A82B /* PostCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
 		5375690D286A42D300F0FCB0 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		5375690E286A42D300F0FCB0 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		53756910286A487D00F0FCB0 /* HomeFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeFeedViewController.h; sourceTree = "<group>"; };
@@ -112,6 +124,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5339CB09286A5D7200A9A82B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5339CB10286A66EB00A9A82B /* InsPost.h */,
+				5339CB11286A66EB00A9A82B /* InsPost.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5339CB19286A6A9F00A9A82B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5339CB1A286A6AAF00A9A82B /* PostCell.h */,
+				5339CB1B286A6AAF00A9A82B /* PostCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		53A2A0F0286A35B200BF7E20 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +149,10 @@
 				5375690E286A42D300F0FCB0 /* LoginViewController.m */,
 				53756910286A487D00F0FCB0 /* HomeFeedViewController.h */,
 				53756911286A487D00F0FCB0 /* HomeFeedViewController.m */,
+				5339CB06286A5CF500A9A82B /* PhotoMapViewController.h */,
+				5339CB07286A5CF500A9A82B /* PhotoMapViewController.m */,
+				5339CB0D286A5E5100A9A82B /* ComposeViewController.h */,
+				5339CB0E286A5E5100A9A82B /* ComposeViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -126,6 +160,8 @@
 		53A7EF16286A2A6A008F4444 = {
 			isa = PBXGroup;
 			children = (
+				5339CB19286A6A9F00A9A82B /* Cells */,
+				5339CB09286A5D7200A9A82B /* Models */,
 				53A2A0F0286A35B200BF7E20 /* View Controllers */,
 				53A7EF21286A2A6A008F4444 /* Instagram */,
 				53A7EF3D286A2A6B008F4444 /* InstagramTests */,
@@ -430,8 +466,12 @@
 				53756912286A487D00F0FCB0 /* HomeFeedViewController.m in Sources */,
 				53A7EF24286A2A6A008F4444 /* AppDelegate.m in Sources */,
 				53A7EF35286A2A6B008F4444 /* main.m in Sources */,
+				5339CB08286A5CF500A9A82B /* PhotoMapViewController.m in Sources */,
+				5339CB12286A66EB00A9A82B /* InsPost.m in Sources */,
+				5339CB1C286A6AAF00A9A82B /* PostCell.m in Sources */,
 				53A7EF27286A2A6A008F4444 /* SceneDelegate.m in Sources */,
 				5375690F286A42D300F0FCB0 /* LoginViewController.m in Sources */,
+				5339CB0F286A5E5100A9A82B /* ComposeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
