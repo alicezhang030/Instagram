@@ -6,6 +6,9 @@
 //
 
 #import "HomeFeedViewController.h"
+#import "Parse/Parse.h"
+#import "AppDelegate.h" // Needed for didTagLogOut
+#import "LoginViewController.h" // Needed for didTagLogOut
 
 @interface HomeFeedViewController ()
 
@@ -16,6 +19,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (IBAction)didTapLogOut:(id)sender {
+    NSLog(@"User tapped log out");
+    
+    // Reset view to the log in screen
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        self.view.window.rootViewController = loginViewController;
+
+    }];
 }
 
 /*

@@ -35,6 +35,7 @@
         } else {
             NSLog(@"User logged in successfully");
             // Display view controller that needs to shown after successful login
+            [self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
         }
     }];
 }
@@ -55,25 +56,26 @@
             NSLog(@"Error: %@", error.localizedDescription);
         } else {
             NSLog(@"User registered successfully");
-            //[self performSegueWithIdentifier:@"loginSegue" sender:nil];
+            // Display view controller that needs to shown after successful login
+            [self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
         }
     }];
 }
 
 - (void) checkEmptyField {
     NSString *title = @"";
-    NSString *message = @"Please enter a ";
+    NSString *message = @"";
     
     if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]) {
         if([self.usernameField.text isEqual:@""] && [self.passwordField.text isEqual:@""]) {
             title = @"Username & Password Required";
-            [message stringByAppendingString:@"username and password and try again."];
+            message = @"Please enter a username and password and try again.";
         } else if([self.usernameField.text isEqual:@""]) { // only username is empty
             title = @"Username Required";
-            [message stringByAppendingString:@"username and try again."];
+            message = @"Please enter a username and try again.";
         } else if([self.passwordField.text isEqual:@""]) { // only password is empty
             title = @"Password Required";
-            [message stringByAppendingString:@"password and try again."];
+            message = @"Please enter a password and try again.";
         }
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
