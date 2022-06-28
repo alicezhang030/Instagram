@@ -105,9 +105,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="514"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aqF-u1-meT">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aqF-u1-meT" customClass="PFImageView">
                                                     <rect key="frame" x="20" y="11" width="29" height="29"/>
-                                                    <color key="backgroundColor" red="0.39607840779999998" green="0.46666663889999999" blue="0.52549022440000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="29" id="C6L-8W-h4S"/>
                                                         <constraint firstAttribute="height" constant="29" id="kzs-f2-ioZ"/>
@@ -187,6 +186,7 @@
                                             <outlet property="likeButton" destination="Aoe-Sl-VkC" id="tpB-NW-B7i"/>
                                             <outlet property="likeCountLabel" destination="T72-u3-H6d" id="YvE-je-rRv"/>
                                             <outlet property="postImageView" destination="pj5-kh-1tc" id="IoF-p7-QJ3"/>
+                                            <outlet property="userProfileImage" destination="aqF-u1-meT" id="wNk-Tt-52k"/>
                                             <outlet property="usernameLabel" destination="Tpr-tw-0cx" id="LLJ-b2-60A"/>
                                             <segue destination="cZF-6W-kcP" kind="show" identifier="TweetTapSegue" id="f1D-3w-89l"/>
                                         </connections>
@@ -217,6 +217,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="6Eb-if-6Sn" id="LE6-Mf-fms"/>
+                        <segue destination="Fok-mx-lxJ" kind="show" id="GbB-p2-x3N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ttD-GU-V5J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -440,37 +441,54 @@
         <!--Profile-->
         <scene sceneID="vmT-H1-nq5">
             <objects>
-                <viewController id="Fok-mx-lxJ" sceneMemberID="viewController">
+                <viewController id="Fok-mx-lxJ" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9Z5-fW-PsQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaN-8Q-x28">
-                                <rect key="frame" x="20" y="56" width="110" height="110"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaN-8Q-x28" customClass="PFImageView">
+                                <rect key="frame" x="24" y="94" width="110" height="110"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.39607843139999999" green="0.12549020350000001" blue="0.13333332540000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AHM-gR-ZC8">
-                                <rect key="frame" x="139" y="82" width="101" height="31"/>
+                                <rect key="frame" x="143" y="173" width="101" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Use camera">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tapUseCamera:" destination="Fok-mx-lxJ" eventType="touchUpInside" id="1us-In-qSL"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DK-KE-iQg">
-                                <rect key="frame" x="138" y="50" width="143" height="31"/>
+                                <rect key="frame" x="142" y="141" width="143" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Select from library">
                                     <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="tapSelectFromLibrary:" destination="Fok-mx-lxJ" eventType="touchUpInside" id="zLG-v2-ycE"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FA2-tZ-DIa">
+                                <rect key="frame" x="154" y="94" width="79" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iyF-zW-YEk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile_tab" id="XeG-wF-OE0"/>
+                    <navigationItem key="navigationItem" id="0qe-C7-0ah"/>
+                    <connections>
+                        <outlet property="userProfileImageView" destination="BaN-8Q-x28" id="5Fi-t0-p53"/>
+                        <outlet property="usernameLabel" destination="FA2-tZ-DIa" id="bVV-Im-T27"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6JP-Dn-9Ge" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -533,6 +551,9 @@
             <point key="canvasLocation" x="2475" y="-98"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="GbB-p2-x3N"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="favor-icon" width="30" height="30"/>

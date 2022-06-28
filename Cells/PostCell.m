@@ -29,6 +29,10 @@
     [self.postImageView loadInBackground];
     self.usernameLabel.text = post.author.username;
     
+    self.userProfileImage.file = post.author[@"profile_image"];
+    [self.userProfileImage loadInBackground];
+
+    
     // Set the like label
     self.likeCountLabel.text = [NSString stringWithFormat:@"%d", [post[@"likeCount"] intValue]];
     
@@ -59,7 +63,7 @@
 }
 
 - (IBAction)didTapLike:(id)sender {
-    NSLog(@"Did tap like");
+    NSLog(@"Did tap (un)like button");
     
     if(self.post.liked != YES) {
         // Update liked boolean
