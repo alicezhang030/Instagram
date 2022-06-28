@@ -27,8 +27,8 @@
         NSLog(@"Welcome back %@ 😄", user.username);
         // Load Chat view controller and set as root view controller
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *insNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"InsNavigationController"];
-        self.window.rootViewController = insNavigationController;
+        UITabBarController *insTabController = [storyboard instantiateViewControllerWithIdentifier:@"InsTabController"];
+        self.window.rootViewController = insTabController;
     }
 }
 

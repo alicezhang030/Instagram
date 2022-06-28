@@ -7,6 +7,7 @@
 
 #import "LoginViewController.h"
 #import "Parse/Parse.h"
+#import "HomeFeedViewController.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
@@ -35,7 +36,10 @@
         } else {
             NSLog(@"User logged in successfully");
             // Display view controller that needs to shown after successful login
-            [self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
+            //[self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            HomeFeedViewController *feedVC = [storyboard instantiateViewControllerWithIdentifier:@"InsTabController"];
+            self.view.window.rootViewController = feedVC;
         }
     }];
 }
@@ -57,7 +61,10 @@
         } else {
             NSLog(@"User registered successfully");
             // Display view controller that needs to shown after successful login
-            [self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            HomeFeedViewController *feedVC = [storyboard instantiateViewControllerWithIdentifier:@"InsTabController"];
+            self.view.window.rootViewController = feedVC;
+            //[self performSegueWithIdentifier:@"loginSignUpSegue" sender:nil];
         }
     }];
 }

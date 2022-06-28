@@ -11,10 +11,12 @@
 #import "LoginViewController.h" // Needed for didTagLogOut
 #import "PostCell.h" // Needed for TableView
 #import "InsPost.h" // Needed for TableView
+#import "DetailsViewController.h"
 
 @interface HomeFeedViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *arrayOfPosts;
+@property (nonatomic, strong) UIRefreshControl *refreshControl; //pull down and refresh the page
 
 @end
 
@@ -29,6 +31,10 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
     [self fetchPosts];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -44,6 +50,7 @@
 
 - (void) fetchPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"InsPost"];
+    [query includeKey:@"author"];
     [query orderByDescending:@"createdAt"];
     query.limit = 20;
     
@@ -52,6 +59,9 @@
         if (posts != nil) {
             self.arrayOfPosts = posts;
             [self.tableView reloadData];
+            
+            //stop the pull down refresher
+            [self.refreshControl endRefreshing];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
@@ -66,18 +76,20 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         self.view.window.rootViewController = loginViewController;
-
     }];
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString: @"TweetTapSegue"]) {
+        NSIndexPath *myIndexPath = [self.tableView indexPathForCell: (PostCell*) sender];
+        InsPost *dataToPass = self.arrayOfPosts[myIndexPath.row];
+        DetailsViewController *detailVC = [segue destinationViewController];
+        detailVC.detailPost = dataToPass;
+    }
 }
-*/
+
 
 @end
