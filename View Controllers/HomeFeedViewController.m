@@ -34,12 +34,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PostCell *cell =[tableView dequeueReusableCellWithIdentifier: @"PostCell"];
     InsPost *post = self.arrayOfPosts[indexPath.row];
-    
-    // Set the cell's caption
-    cell.captionLabel.text = post[@"caption"];
-    
-    // TODO: Set the cell's image
-    
+    [cell setPost:post];
     return cell;
 }
 

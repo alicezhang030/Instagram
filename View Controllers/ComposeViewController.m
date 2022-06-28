@@ -62,7 +62,9 @@
 }
 
 - (IBAction)postCompose:(id)sender {
-    [InsPost postUserImage:self.imagePreview.image withCaption:self.captionView.text withCompletion:^(BOOL succeeded, NSError * error) {
+    UIImage *newImage = [self resizeImage:self.imagePreview.image withSize:self.imagePreview.bounds.size];
+    
+    [InsPost postUserImage:newImage withCaption:self.captionView.text withCompletion:^(BOOL succeeded, NSError * error) {
             if (succeeded) {
                 NSLog(@"The message was posted!");
                 [self dismissViewControllerAnimated:true completion:nil];

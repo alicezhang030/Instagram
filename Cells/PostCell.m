@@ -6,6 +6,7 @@
 //
 
 #import "PostCell.h"
+#import "Parse/PFImageView.h"
 
 @implementation PostCell
 
@@ -18,6 +19,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setPost:(InsPost *)post {
+    _post = post;
+    self.captionLabel.text = post[@"caption"];
+    self.postImageView.file = post[@"image"];
+    [self.postImageView loadInBackground];
 }
 
 @end
