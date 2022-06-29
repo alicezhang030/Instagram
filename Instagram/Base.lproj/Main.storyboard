@@ -218,7 +218,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="6Eb-if-6Sn" id="LE6-Mf-fms"/>
-                        <segue destination="Fok-mx-lxJ" kind="show" id="GbB-p2-x3N"/>
+                        <segue destination="hHm-28-kXT" kind="show" id="GbB-p2-x3N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ttD-GU-V5J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -240,9 +240,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="566"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cwx-HK-Q7f">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cwx-HK-Q7f" customClass="PFImageView">
                                             <rect key="frame" x="15" y="2" width="29" height="29"/>
-                                            <color key="backgroundColor" red="0.39607840779999998" green="0.46666663889999999" blue="0.52549022440000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="29" id="BVK-hS-lqs"/>
                                                 <constraint firstAttribute="height" constant="29" id="W7W-mv-4GM"/>
@@ -334,6 +333,7 @@
                         <outlet property="likeButton" destination="Lyy-OQ-zzd" id="CB4-T6-fKA"/>
                         <outlet property="likeLabel" destination="k2e-Xg-cLm" id="REh-pw-dVE"/>
                         <outlet property="postImageView" destination="gu5-Xl-0rZ" id="MFX-fT-tEq"/>
+                        <outlet property="profileImage" destination="cwx-HK-Q7f" id="IGt-0r-YZg"/>
                         <outlet property="usernameLabel" destination="Rc3-5D-ipX" id="XNT-AD-5j6"/>
                     </connections>
                 </viewController>
@@ -439,7 +439,7 @@
             </objects>
             <point key="canvasLocation" x="3327.5362318840585" y="-98.4375"/>
         </scene>
-        <!--Profile-->
+        <!--Profile View Controller-->
         <scene sceneID="vmT-H1-nq5">
             <objects>
                 <viewController id="Fok-mx-lxJ" customClass="ProfileViewController" sceneMemberID="viewController">
@@ -522,6 +522,7 @@
                                             </collectionViewCellContentView>
                                             <connections>
                                                 <outlet property="userPostImage" destination="7f3-jt-i5D" id="dyx-G9-sO1"/>
+                                                <segue destination="cZF-6W-kcP" kind="show" identifier="didTapCollectionPost" id="Cc4-cJ-JFf"/>
                                             </connections>
                                         </collectionViewCell>
                                     </cells>
@@ -531,7 +532,6 @@
                         <viewLayoutGuide key="safeArea" id="iyF-zW-YEk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="profile_tab" id="XeG-wF-OE0"/>
                     <navigationItem key="navigationItem" id="0qe-C7-0ah"/>
                     <connections>
                         <outlet property="collectionView" destination="jnV-MF-Khk" id="C5l-V7-6Fv"/>
@@ -542,7 +542,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6JP-Dn-9Ge" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4276.811594202899" y="-98.4375"/>
+            <point key="canvasLocation" x="5186.9565217391309" y="-98.4375"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="FQA-JQ-5Us">
@@ -556,7 +556,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="slW-qd-5Qn" kind="relationship" relationship="viewControllers" id="mDU-1m-RSo"/>
-                        <segue destination="Fok-mx-lxJ" kind="relationship" relationship="viewControllers" id="sMy-aj-8fj"/>
+                        <segue destination="hHm-28-kXT" kind="relationship" relationship="viewControllers" id="sMy-aj-8fj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2Z-p5-ffS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -600,9 +600,30 @@
             </objects>
             <point key="canvasLocation" x="2475" y="-98"/>
         </scene>
+        <!--Profile-->
+        <scene sceneID="cjV-XA-FfB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hHm-28-kXT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile_tab" id="XeG-wF-OE0"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="ax6-gZ-lJT"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="y2S-Nj-RHp">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Fok-mx-lxJ" kind="relationship" relationship="rootViewController" id="TLr-Za-FoH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dCt-Zz-eoi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4276.811594202899" y="-98.4375"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="GbB-p2-x3N"/>
+        <segue reference="Cc4-cJ-JFf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>

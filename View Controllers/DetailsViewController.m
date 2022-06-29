@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (weak, nonatomic) IBOutlet PFImageView *profileImage;
 
 @end
 
@@ -28,6 +29,13 @@
     
     self.postImageView.file = self.detailPost[@"image"];
     [self.postImageView loadInBackground];
+    
+    self.profileImage.file = self.detailPost.author[@"profile_image"];
+    [self.profileImage loadInBackground];
+    
+    self.profileImage.layer.cornerRadius = self.profileImage.frame.size.height /2;
+    self.profileImage.layer.masksToBounds = YES;
+    self.profileImage.layer.borderWidth = 0;
     
     self.usernameLabel.text = self.detailPost.author.username;
     

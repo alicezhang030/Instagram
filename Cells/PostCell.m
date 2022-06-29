@@ -32,6 +32,10 @@
     self.userProfileImage.file = post.author[@"profile_image"];
     [self.userProfileImage loadInBackground];
     
+    self.userProfileImage.layer.cornerRadius = self.userProfileImage.frame.size.height /2;
+    self.userProfileImage.layer.masksToBounds = YES;
+    self.userProfileImage.layer.borderWidth = 0;
+    
     // Set the like label
     self.likeCountLabel.text = [NSString stringWithFormat:@"%d", [post[@"likeCount"] intValue]];
     

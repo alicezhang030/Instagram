@@ -10,6 +10,7 @@
 #import "Parse/PFImageView.h"
 #import "PostCell.h"
 #import "ProfilePostCollectionViewCell.h"
+#import "DetailsViewController.h"
 
 @interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource>
 
@@ -39,6 +40,10 @@
     PFUser *currentUser = [PFUser currentUser];
     self.userProfileImageView.file = currentUser[@"profile_image"];
     [self.userProfileImageView loadInBackground];
+    
+    self.userProfileImageView.layer.cornerRadius = self.userProfileImageView.frame.size.height /2;
+    self.userProfileImageView.layer.masksToBounds = YES;
+    self.userProfileImageView.layer.borderWidth = 0;
     
     // Fetch the posts
     [self fetchPosts];
@@ -172,15 +177,17 @@
     return self.arrayOfUserPosts.count;
 }
 
-
-/*
- #pragma mark - Navigation
+ //#pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+     if([segue.identifier isEqualToString: @"didTapCollectionPost"]) {
+         NSIndexPath *myIndexPath = [self.collectionView indexPathForCell: (ProfilePostCollectionViewCell*) sender];
+         InsPost *dataToPass = self.arrayOfUserPosts[myIndexPath.row];
+         DetailsViewController *detailVC = [segue destinationViewController];
+         detailVC.detailPost = dataToPass;
+     }
  }
- */
+ 
 
 @end
