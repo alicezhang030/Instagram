@@ -11,6 +11,7 @@
 @interface ComposeViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imagePreview;
 @property (weak, nonatomic) IBOutlet UITextView *captionView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner; //spinner while waiting for API
 
 @end
 
@@ -18,7 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.spinner.hidesWhenStopped = YES; //when the data retrival is finished, the spinner will disappear
+    
+    self.captionView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.captionView.layer.borderWidth = 0.5;
 }
 
 - (IBAction)tapSelectFromLibrary:(id)sender {
@@ -62,6 +67,8 @@
 }
 
 - (IBAction)postCompose:(id)sender {
+    [self.spinner startAnimating];
+    
     CGRect bounds = UIScreen.mainScreen.bounds;      // fetches device's screen
     CGFloat width = bounds.size.width;               // extracts width of bounds
     CGSize imageSize = CGSizeMake(width, width);     // creates square image
@@ -72,6 +79,7 @@
             if (succeeded) {
                 NSLog(@"The message was posted!");
                 [self dismissViewControllerAnimated:true completion:nil];
+                [self.spinner stopAnimating];
             } else {
                 NSLog(@"Problem posting: %@", error.localizedDescription);
             }

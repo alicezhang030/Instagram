@@ -373,14 +373,13 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write a caption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gD-lw-n9n">
-                                <rect key="frame" x="20" y="238" width="127" height="22"/>
+                                <rect key="frame" x="20" y="238" width="127" height="23"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="r4i-G2-rM4">
-                                <rect key="frame" x="20" y="267" width="374" height="128"/>
-                                <color key="backgroundColor" red="0.6784313917" green="0.72156864399999998" blue="0.7607843876" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="20" y="268" width="374" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="IF3-D6-3LA"/>
                                 </constraints>
@@ -398,24 +397,31 @@
                                     <action selector="tapUseCamera:" destination="Xud-Vb-G7G" eventType="touchUpInside" id="2TJ-aI-nYl"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3iT-EX-mbc">
+                                <rect key="frame" x="197" y="211" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Kb-jV-HgM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="h2e-Wc-fms" firstAttribute="leading" secondItem="6Kb-jV-HgM" secondAttribute="leading" constant="9" id="0PB-ud-x1W"/>
                             <constraint firstItem="r4i-G2-rM4" firstAttribute="top" secondItem="5gD-lw-n9n" secondAttribute="bottom" constant="7" id="3Wb-Sk-5yM"/>
+                            <constraint firstItem="r4i-G2-rM4" firstAttribute="top" secondItem="3iT-EX-mbc" secondAttribute="bottom" constant="37" id="4kE-e9-AxU"/>
                             <constraint firstItem="aLG-1R-F2O" firstAttribute="leading" secondItem="6Kb-jV-HgM" secondAttribute="leading" constant="9" id="6L5-rG-toh"/>
                             <constraint firstItem="h2e-Wc-fms" firstAttribute="top" secondItem="aLG-1R-F2O" secondAttribute="bottom" constant="-2" id="Al4-Yo-CvL"/>
                             <constraint firstItem="kPj-bA-dyJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3dk-gF-c8H" secondAttribute="trailing" constant="15" id="LpH-ha-Izy"/>
                             <constraint firstItem="6Kb-jV-HgM" firstAttribute="trailing" secondItem="r4i-G2-rM4" secondAttribute="trailing" constant="20" id="O9h-0J-zW8"/>
                             <constraint firstItem="5gD-lw-n9n" firstAttribute="top" secondItem="kPj-bA-dyJ" secondAttribute="bottom" constant="33" id="Qr7-cb-3S0"/>
                             <constraint firstItem="r4i-G2-rM4" firstAttribute="leading" secondItem="5gD-lw-n9n" secondAttribute="leading" id="fI4-bV-lvx"/>
+                            <constraint firstItem="6Kb-jV-HgM" firstAttribute="trailing" secondItem="3iT-EX-mbc" secondAttribute="trailing" constant="197" id="h2G-3D-teN"/>
                             <constraint firstItem="3dk-gF-c8H" firstAttribute="top" secondItem="6Kb-jV-HgM" secondAttribute="top" constant="21" id="mkz-L8-G65"/>
                             <constraint firstItem="kPj-bA-dyJ" firstAttribute="top" secondItem="6Kb-jV-HgM" secondAttribute="top" constant="21" id="nER-ob-KeW"/>
                             <constraint firstItem="3dk-gF-c8H" firstAttribute="leading" secondItem="6Kb-jV-HgM" secondAttribute="leading" constant="20" id="oQU-1k-Tuz"/>
                             <constraint firstItem="6Kb-jV-HgM" firstAttribute="trailing" secondItem="kPj-bA-dyJ" secondAttribute="trailing" constant="20" id="rGA-jq-dN0"/>
                             <constraint firstItem="aLG-1R-F2O" firstAttribute="top" secondItem="3dk-gF-c8H" secondAttribute="bottom" constant="6" id="wv9-s8-6TW"/>
+                            <constraint firstItem="3iT-EX-mbc" firstAttribute="leading" secondItem="6Kb-jV-HgM" secondAttribute="leading" constant="197" id="xQr-94-xGR"/>
                             <constraint firstItem="5gD-lw-n9n" firstAttribute="leading" secondItem="3dk-gF-c8H" secondAttribute="leading" id="ysO-Ms-E5s"/>
+                            <constraint firstItem="3iT-EX-mbc" firstAttribute="top" secondItem="6Kb-jV-HgM" secondAttribute="top" constant="155" id="zTQ-YA-lPN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eAu-de-V7y">
@@ -433,6 +439,7 @@
                     <connections>
                         <outlet property="captionView" destination="r4i-G2-rM4" id="VP0-Wx-dIV"/>
                         <outlet property="imagePreview" destination="kPj-bA-dyJ" id="x0u-e2-KBN"/>
+                        <outlet property="spinner" destination="3iT-EX-mbc" id="2rb-4C-qB5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ut-j8-aX6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
