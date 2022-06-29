@@ -36,10 +36,13 @@
     self.collectionView.dataSource = self;
     self.collectionView.scrollEnabled = NO;
     
-    //Fetch the profile image
+    // Fetch the profile image
     PFUser *currentUser = [PFUser currentUser];
     self.userProfileImageView.file = currentUser[@"profile_image"];
     [self.userProfileImageView loadInBackground];
+    
+    // Fetch the username
+    self.usernameLabel.text = currentUser.username;
     
     self.userProfileImageView.layer.cornerRadius = self.userProfileImageView.frame.size.height /2;
     self.userProfileImageView.layer.masksToBounds = YES;
