@@ -11,8 +11,9 @@
 #import "PostCell.h"
 #import "ProfilePostCollectionViewCell.h"
 
-@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource>
+@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet PFImageView *userProfileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (nonatomic, strong) NSArray *arrayOfUserPosts;
@@ -26,9 +27,13 @@
     [super viewDidLoad];
     
     // Set up TableView
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+    //self.tableView.delegate = self;
+    //self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    // Set up CollectionView
+    self.collectionView.dataSource = self;
+    self.collectionView.scrollEnabled = NO;
     
     //Fetch the profile image
     PFUser *currentUser = [PFUser currentUser];
@@ -117,20 +122,6 @@
     return newImage;
 }
 
-- (void) updateProfile {
-    PFUser *currentUser = [PFUser currentUser];
-    currentUser[@"profile_image"] = self.userProfileImageView.file;
-    
-    [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if(error){
-              NSLog(@"Error posting: %@", error.localizedDescription);
-         }
-         else{
-             NSLog(@"Successfully posted");
-         }
-    }];
-}
-
 - (void) fetchPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"InsPost"];
     [query includeKey:@"author"];
@@ -143,12 +134,16 @@
         if (posts != nil) {
             self.arrayOfUserPosts = posts;
             [self.tableView reloadData];
+            [self.collectionView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
         }
     }];
 }
 
+// -------- TABLE VIEW --------
+
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PostCell *cell = [tableView dequeueReusableCellWithIdentifier: @"PostCell"];
     cell.post = self.arrayOfUserPosts[indexPath.row];
@@ -157,16 +152,35 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.arrayOfUserPosts.count;
+}*/
+
+// -------- COLLECTION VIEW --------
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    ProfilePostCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ProfilePostCollectionViewCell" forIndexPath:indexPath];
+    
+    InsPost *post = self.arrayOfUserPosts[indexPath.row];
+    
+    // Set the cell
+    cell.userPostImage.file = post.image;
+    [cell.userPostImage loadInBackground];
+    
+    return cell;
 }
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.arrayOfUserPosts.count;
+}
+
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
