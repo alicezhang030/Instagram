@@ -62,7 +62,11 @@
 }
 
 - (IBAction)postCompose:(id)sender {
-    UIImage *newImage = [self resizeImage:self.imagePreview.image withSize:self.imagePreview.bounds.size];
+    CGRect bounds = UIScreen.mainScreen.bounds;      // fetches device's screen
+    CGFloat width = bounds.size.width;               // extracts width of bounds
+    CGSize imageSize = CGSizeMake(width, width);     // creates square image
+    
+    UIImage *newImage = [self resizeImage:self.imagePreview.image withSize:imageSize];
     
     [InsPost postUserImage:newImage withCaption:self.captionView.text withCompletion:^(BOOL succeeded, NSError * error) {
             if (succeeded) {

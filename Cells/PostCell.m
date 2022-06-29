@@ -31,7 +31,6 @@
     
     self.userProfileImage.file = post.author[@"profile_image"];
     [self.userProfileImage loadInBackground];
-
     
     // Set the like label
     self.likeCountLabel.text = [NSString stringWithFormat:@"%d", [post[@"likeCount"] intValue]];

@@ -8,10 +8,15 @@
 #import "ProfileViewController.h"
 #import "Parse/Parse.h"
 #import "Parse/PFImageView.h"
+#import "PostCell.h"
+#import "ProfilePostCollectionViewCell.h"
 
-@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource>
+
 @property (weak, nonatomic) IBOutlet PFImageView *userProfileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (nonatomic, strong) NSArray *arrayOfUserPosts;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -20,12 +25,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Set up TableView
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     //Fetch the profile image
     PFUser *currentUser = [PFUser currentUser];
     self.userProfileImageView.file = currentUser[@"profile_image"];
     [self.userProfileImageView loadInBackground];
     
-    // Do any additional setup after loading the view.
+    // Fetch the posts
+    [self fetchPosts];
 }
 
 - (IBAction)tapSelectFromLibrary:(id)sender {
@@ -74,13 +85,36 @@
 
     [self.userProfileImageView setImage:originalImage];
     
+    CGRect bounds = UIScreen.mainScreen.bounds;      // fetches device's screen
+    CGFloat width = bounds.size.width;               // extracts width of bounds
+    CGSize imageSize = CGSizeMake(width, width);     // creates square image
+    
+    self.userProfileImageView.image = [self resizeImage:originalImage withSize:imageSize];
+    
+    NSData *imageData = UIImagePNGRepresentation(self.userProfileImageView.image);
+    PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
+    
     PFUser *currentUser = [PFUser currentUser];
-    currentUser[@"profile_image"] = self.userProfileImageView.file;
+    currentUser[@"profile_image"] = imageFile;
     
     [currentUser saveInBackground];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    
+    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
+    resizeImageView.image = image;
+    
+    UIGraphicsBeginImageContext(size);
+    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 - (void) updateProfile {
@@ -95,6 +129,34 @@
              NSLog(@"Successfully posted");
          }
     }];
+}
+
+- (void) fetchPosts {
+    PFQuery *query = [PFQuery queryWithClassName:@"InsPost"];
+    [query includeKey:@"author"];
+    [query whereKey:@"author" equalTo:[PFUser currentUser]];
+    [query orderByDescending:@"createdAt"];
+    query.limit = 20;
+    
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+        if (posts != nil) {
+            self.arrayOfUserPosts = posts;
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PostCell *cell = [tableView dequeueReusableCellWithIdentifier: @"PostCell"];
+    cell.post = self.arrayOfUserPosts[indexPath.row];
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.arrayOfUserPosts.count;
 }
 
 /*
