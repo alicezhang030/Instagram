@@ -17,6 +17,14 @@
     
     //remove the gray highlight after you select a cell
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.userProfileImage addGestureRecognizer:profileTapGestureRecognizer];
+    [self.userProfileImage setUserInteractionEnabled:YES];
+}
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self.delegate postCell:self didTap:self.post.author];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

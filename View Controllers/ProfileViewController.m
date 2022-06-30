@@ -37,12 +37,15 @@
     self.collectionView.scrollEnabled = NO;
     
     // Fetch the profile image
-    PFUser *currentUser = [PFUser currentUser];
-    self.userProfileImageView.file = currentUser[@"profile_image"];
+    if(self.userToDisplay == nil) {
+        self.userToDisplay = [PFUser currentUser];
+    }
+    
+    self.userProfileImageView.file = self.userToDisplay[@"profile_image"];
     [self.userProfileImageView loadInBackground];
     
     // Fetch the username
-    self.usernameLabel.text = currentUser.username;
+    self.usernameLabel.text = self.userToDisplay.username;
     
     self.userProfileImageView.layer.cornerRadius = self.userProfileImageView.frame.size.height /2;
     self.userProfileImageView.layer.masksToBounds = YES;
@@ -107,10 +110,10 @@
     NSData *imageData = UIImagePNGRepresentation(self.userProfileImageView.image);
     PFFileObject *imageFile = [PFFileObject fileObjectWithName:@"avatar.png" data:imageData];
     
-    PFUser *currentUser = [PFUser currentUser];
-    currentUser[@"profile_image"] = imageFile;
+    //PFUser *currentUser = [PFUser currentUser];
+    self.userToDisplay[@"profile_image"] = imageFile;
     
-    [currentUser saveInBackground];
+    [self.userToDisplay saveInBackground];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -133,7 +136,7 @@
 - (void) fetchPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"InsPost"];
     [query includeKey:@"author"];
-    [query whereKey:@"author" equalTo:[PFUser currentUser]];
+    [query whereKey:@"author" equalTo:self.userToDisplay];
     [query orderByDescending:@"createdAt"];
     query.limit = 20;
     

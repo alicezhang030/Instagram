@@ -219,6 +219,7 @@
                     <connections>
                         <outlet property="tableView" destination="6Eb-if-6Sn" id="LE6-Mf-fms"/>
                         <segue destination="hHm-28-kXT" kind="show" id="GbB-p2-x3N"/>
+                        <segue destination="Fok-mx-lxJ" kind="show" identifier="ProfileSegue" id="Wxp-KL-if8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ttD-GU-V5J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -651,7 +652,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="GbB-p2-x3N"/>
-        <segue reference="Cc4-cJ-JFf"/>
+        <segue reference="Wxp-KL-if8"/>
+        <segue reference="f1D-3w-89l"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>

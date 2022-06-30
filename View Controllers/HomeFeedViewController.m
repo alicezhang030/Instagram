@@ -12,8 +12,10 @@
 #import "PostCell.h" // Needed for TableView
 #import "InsPost.h" // Needed for TableView
 #import "DetailsViewController.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
+#import "ProfileViewController.h"
 
-@interface HomeFeedViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface HomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, PostCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *arrayOfPosts;
 @property (nonatomic, strong) UIRefreshControl *refreshControl; //pull down and refresh the page
@@ -35,12 +37,23 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
+    
+    /*
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        // append data to data source, insert new cells at the end of table view
+        // call [tableView.infiniteScrollingView stopAnimating] when done
+    }];*/
+}
+
+- (void)postCell:(PostCell *) postCell didTap: (PFUser *)user {
+    [self performSegueWithIdentifier:@"ProfileSegue" sender:user];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PostCell *cell =[tableView dequeueReusableCellWithIdentifier: @"PostCell"];
     InsPost *post = self.arrayOfPosts[indexPath.row];
     [cell setPost:post];
+    cell.delegate = self;
     return cell;
 }
 
@@ -88,6 +101,11 @@
         InsPost *dataToPass = self.arrayOfPosts[myIndexPath.row];
         DetailsViewController *detailVC = [segue destinationViewController];
         detailVC.detailPost = dataToPass;
+    }
+    
+    if([segue.identifier isEqualToString:@"ProfileSegue"]) {
+        ProfileViewController *profileVC = [segue destinationViewController];
+        profileVC.userToDisplay = sender;
     }
 }
 
