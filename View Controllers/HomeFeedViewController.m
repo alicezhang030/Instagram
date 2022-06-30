@@ -45,6 +45,11 @@
     }];*/
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fetchPosts];
+}
+
 - (void)postCell:(PostCell *) postCell didTap: (PFUser *)user {
     [self performSegueWithIdentifier:@"ProfileSegue" sender:user];
 }

@@ -55,6 +55,11 @@
     [self fetchPosts];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fetchPosts];
+}
+
 - (IBAction)tapSelectFromLibrary:(id)sender {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
