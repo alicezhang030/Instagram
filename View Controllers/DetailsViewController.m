@@ -60,16 +60,19 @@
         self.dateLabel.text = dateSince;
     }
     
+    /*
+    
     if(self.detailPost.liked == YES) {
         [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
     } else {
         [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
-    }
+    }*/
 }
 
 - (IBAction)didTapLikeButton:(id)sender {
     NSLog(@"Did tap details view like");
     
+    /*
     if(self.detailPost.liked != YES) {
         // Update liked boolean
         self.detailPost.liked = YES;
@@ -98,7 +101,7 @@
         // Update cell UI
         [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
         self.likeLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
-    }
+    }*/
 }
 
 /*
