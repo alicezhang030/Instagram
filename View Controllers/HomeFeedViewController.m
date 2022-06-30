@@ -17,7 +17,7 @@
 
 @interface HomeFeedViewController () <UITableViewDataSource, UITableViewDelegate, PostCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *arrayOfPosts;
+@property (nonatomic, strong) NSMutableArray *arrayOfPosts;
 @property (nonatomic, strong) UIRefreshControl *refreshControl; //pull down and refresh the page
 
 @end
@@ -38,11 +38,37 @@
     [self.refreshControl addTarget:self action:@selector(fetchPosts) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     
-    /*
     [self.tableView addInfiniteScrollingWithActionHandler:^{
         // append data to data source, insert new cells at the end of table view
         // call [tableView.infiniteScrollingView stopAnimating] when done
-    }];*/
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"InsPost"];
+        [query includeKey:@"author"];
+        [query orderByDescending:@"createdAt"];
+        
+        NSUInteger arrayOfPostsSize = [self.arrayOfPosts count];
+        InsPost *lastPost = self.arrayOfPosts[arrayOfPostsSize  - 1];
+        [query whereKey:@"createdAt" lessThan: lastPost.createdAt];
+        
+        query.limit = 20;
+        
+        // fetch data asynchronously
+        [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+            if (posts != nil) {
+                
+                // Add the newly queried posts the original arrayOfPosts
+                for(int i = 0; i < [posts count]; i++) {
+                   [self.arrayOfPosts addObject:posts[i]];
+                }
+                
+                [self.tableView reloadData];
+                [self.tableView.infiniteScrollingView stopAnimating];
+            } else {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];
+        
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -75,7 +101,7 @@
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts != nil) {
-            self.arrayOfPosts = posts;
+            self.arrayOfPosts = (NSMutableArray *) posts;
             [self.tableView reloadData];
             
             //stop the pull down refresher

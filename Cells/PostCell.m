@@ -114,6 +114,8 @@
                     likeCountInt -= 1;
                     self.post[@"likeCount"] = [NSNumber numberWithInt:likeCountInt];
                     
+                    [self.post saveInBackground];
+                    
                     // Update cell UI
                     [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
                     self.likeCountLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
@@ -206,7 +208,7 @@
         
         [self.post saveInBackground];
         
-        // Update cell UI
+        // -Update cell UI
         [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
         self.likeCountLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
     }*/

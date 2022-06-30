@@ -8,6 +8,7 @@
 #import "DetailsViewController.h"
 #import "Parse/PFImageView.h"
 #import "DateTools.h"
+#import "Likes.h"
 
 @interface DetailsViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -60,48 +61,87 @@
         self.dateLabel.text = dateSince;
     }
     
-    /*
+    PFQuery *query = [PFQuery queryWithClassName:@"Likes"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
     
-    if(self.detailPost.liked == YES) {
-        [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
-    } else {
-        [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
-    }*/
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
+        if (likes != nil) {
+            bool likedPostBefore = NO;
+            
+            for (Likes *likeObj in likes) {
+                //User has liked the post in question, so delete the Like entry
+                if([likeObj.post.objectId isEqualToString:self.detailPost.objectId]) {
+                    likedPostBefore = YES;
+                }
+            }
+            
+            if(likedPostBefore) {
+                [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
+            } else {
+                [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
+            }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
 }
 
 - (IBAction)didTapLikeButton:(id)sender {
     NSLog(@"Did tap details view like");
     
-    /*
-    if(self.detailPost.liked != YES) {
-        // Update liked boolean
-        self.detailPost.liked = YES;
-        
-        // Update likeCount
-        int likeCountInt = [self.detailPost[@"likeCount"] intValue];
-        likeCountInt += 1;
-        self.detailPost[@"likeCount"] = [NSNumber numberWithInt:likeCountInt];
-        
-        // Update database
-        [self.detailPost saveInBackground];
-        
-        // Update cell UI
-        [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
-        self.likeLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
-    } else { //unfavorite
-        self.detailPost.liked = NO;
-        
-        // Update likeCount
-        int likeCountInt = [self.detailPost[@"likeCount"] intValue];
-        likeCountInt -= 1;
-        self.detailPost[@"likeCount"] = [NSNumber numberWithInt:likeCountInt];
-        
-        [self.detailPost saveInBackground];
-        
-        // Update cell UI
-        [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
-        self.likeLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
-    }*/
+    PFQuery *query = [PFQuery queryWithClassName:@"Likes"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *likes, NSError *error) {
+        if (likes != nil) {
+            bool likedPostBefore = NO;
+            
+            for (Likes *likeObj in likes) {
+                if([likeObj.post.objectId isEqualToString:self.detailPost.objectId]) { //User has liked the post before -> delete the Like entry
+                    likedPostBefore = YES;
+                    
+                    // Update likeCount
+                    int likeCountInt = [self.detailPost[@"likeCount"] intValue];
+                    likeCountInt -= 1;
+                    self.detailPost[@"likeCount"] = [NSNumber numberWithInt:likeCountInt];
+                    
+                    [self.detailPost saveInBackground];
+                    
+                    // Update cell UI
+                    [self.likeButton setImage:[UIImage imageNamed:@"favor-icon.png"] forState:UIControlStateNormal];
+                    self.likeLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
+                    
+                    [Likes deleteLike:likeObj];
+                }
+            }
+            
+            //User has liked posts but has not liked the post in question, so add a Like entry
+            if(!likedPostBefore) {
+                [Likes postLike:self.detailPost fromUser: [PFUser currentUser] withCompletion:^(BOOL succeeded, NSError * error) {
+                    if (succeeded) {
+                        NSLog(@"The Like was uploaded!");
+                        
+                        // Update likeCount
+                        int likeCountInt = [self.detailPost[@"likeCount"] intValue];
+                        likeCountInt += 1;
+                        self.detailPost[@"likeCount"] = [NSNumber numberWithInt:likeCountInt];
+                        
+                        [self.detailPost saveInBackground];
+                        
+                        // Update cell UI
+                        [self.likeButton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState:UIControlStateNormal];
+                        self.likeLabel.text = [NSString stringWithFormat:@"%d", likeCountInt];
+                    } else {
+                        NSLog(@"Problem uploading the Like: %@", error.localizedDescription);
+                    }
+                }];
+            }
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
 }
 
 /*
