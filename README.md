@@ -45,6 +45,8 @@ Here's a walkthrough of implemented user stories:
 | Sign Up / Log in / Log out | User persistence |
 | -------------------------- | -----:|
 | <img src="https://github.com/alicezhang030/Instagram/blob/main/Showcase/signup_login.gif" width=50% height=50%> | <img src="https://github.com/alicezhang030/Instagram/blob/main/Showcase/persistence.gif" width=50% height=50%> | 
+| Post photo | View last 20 posts, pull to refresh, details view |
+| <img src="https://github.com/alicezhang030/Instagram/blob/main/Showcase/take%20and%20upload%20photo.gif" width=50% height=50%> | <img src="https://github.com/alicezhang030/Instagram/blob/main/Showcase/view%20last%2020%20posts%20pull%20to%20refresh%20details%20view.gif" width=50% height=50%> | 
 
 ## Credits
 
