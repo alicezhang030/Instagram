@@ -2,7 +2,7 @@
 
 **Instagram** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -35,8 +35,8 @@ The following **optional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. How to implement direct messages between users
+2. How to allow users to post multiple photos in one post
 
 ## Video Walkthrough
 
@@ -59,12 +59,13 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
 - [DateTools](https://github.com/MatthewYork/DateTools) - date formatting library
-- [SVPullToRefresh + SVInfiniteScrolling
-](https://github.com/samvermette/SVPullToRefresh) - assist with infinite scrolling
+- [SVPullToRefresh + SVInfiniteScrolling](https://github.com/samvermette/SVPullToRefresh) - assist with infinite scrolling
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+Updating the like button was more challenging than I originally thought. I initially added a liked boolean to each post, but then I realized all of the users access the same boolean. So, I then created a new database that store all of the like relations between users and posts. 
 
 ## License
 
